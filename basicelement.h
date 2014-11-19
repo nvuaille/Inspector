@@ -2,26 +2,26 @@
 #define BASICELEMENT_H
 
 #include <QWidget>
-#include <QLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QToolButton>
-#include <QSpinBox>
+class QVBoxLayout;
+class QLabel;
+class QToolButton;
 
 class BasicElement : public QWidget
 {
     Q_OBJECT
 public:
     explicit BasicElement(QWidget *parent = 0);
+    ~BasicElement();
+    BasicElement(const BasicElement&);
 
 signals:
 
 public slots:
-    /*
-    * Display or hide contents, onButtonClick
-    */
+
+    // Display tool
     void expend();
 
+    // Manage section
     void renameSection(QString newName);
     void addToSection(QWidget *newWidget);
 
@@ -32,7 +32,7 @@ private:
     QLabel* _sectionTitle;
     QToolButton* _btn;
 
-    bool isExpended;
+    bool _isExpended;
 };
 
 #endif // BASICELEMENT_H

@@ -16,21 +16,50 @@ CommonInterface::CommonInterface(QWidget *parent) :
     setLayout(_layout);
 
     init();
-    addSection("Duration", new QLineEdit);
-    addSection("Comment", new QLineEdit);
-    setValues();
+    addNewSection("Comment", new QLineEdit);
+    updateDisplayedValues();
+
+    //findChild<QWidget*>("ElementColor")->setVisible(false);
 
 }
 
-void CommonInterface::addSection(QString name, QWidget *content)
+void CommonInterface::addNewSection(QString sectionName, QWidget *content)
 {
     BasicElement* section = new BasicElement(this);
-    section->renameSection(name);
+    section->renameSection(sectionName);
     section->addToSection(content);
     _layout->addWidget(section);
 }
 
-void CommonInterface::setValues()
+void CommonInterface::addInSection(QString sectionName, QWidget *content)
+{
+
+}
+
+void CommonInterface::insertSection(int index, QString name, QWidget *content)
+{
+    BasicElement* section = new BasicElement(this);
+    section->renameSection(name);
+    section->addToSection(content);
+    _layout->insertWidget(index, section);
+}
+
+void CommonInterface::removeSection(QString sectionName)
+{
+
+}
+
+void CommonInterface::moveSection(int oldIndex, int newIndex, QString sectionName)
+{
+
+}
+
+void CommonInterface::moveSections()
+{
+
+}
+
+void CommonInterface::updateDisplayedValues()
 {
     _objectName->setText("objectX"); // récupérer direct le vrai nom
     _colorButtonPixmap->fill(QColor(Qt::gray)); // récupérer direct la vraie couleur
@@ -38,13 +67,19 @@ void CommonInterface::setValues()
 
 }
 
+void CommonInterface::changeColor()
+{
+
+}
+
 void CommonInterface::init()
 {
     // Name
-    QWidget *nameLine = new QWidget;
+    QWidget *nameLine = new QWidget(this);
     QHBoxLayout *nameLayout = new QHBoxLayout;
     QLabel *nameLabel = new QLabel("Object Name : ");
     _objectName = new QLineEdit;
+    nameLine->setObjectName("ElementName");
 
     nameLayout->addWidget(nameLabel);
     nameLayout->addWidget(_objectName);
@@ -52,10 +87,10 @@ void CommonInterface::init()
     _layout->addWidget(nameLine);
 
     //Color
-    QWidget *colorLine = new QWidget;
+    QWidget *colorLine = new QWidget(this);
     QHBoxLayout *colorLayout = new QHBoxLayout;
     QLabel *colorLabel = new QLabel("Object Color : ");
-
+    colorLine->setObjectName("ElementColor");
     _colorButton = new QPushButton;
     _colorButton->setMaximumSize(QSize(1.5*COLOR_ICON_SIZE, 1.5*COLOR_ICON_SIZE));
     _colorButton->setIconSize(QSize(COLOR_ICON_SIZE, COLOR_ICON_SIZE));
@@ -70,5 +105,5 @@ void CommonInterface::init()
     _layout->addWidget(colorLine);
 
     // Connection
-//    connect(_colorButton, SIGNAL(clicked()), this, SLOT(changeColor()));  // Le slot sera dans un 'presenteur'
+    connect(_colorButton, SIGNAL(clicked()), this, SLOT(changeColor()));  // Le slot sera dans un 'presenteur'
 }

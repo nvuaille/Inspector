@@ -3,7 +3,7 @@
 #include "QPushButton"
 #include <QLayout>
 
-#include "commoninterface.h"
+#include "intervalinspectorview.h"
 #include "basicelement.h"
 
 InspectorPanel::InspectorPanel(QWidget *parent) :
@@ -11,9 +11,6 @@ InspectorPanel::InspectorPanel(QWidget *parent) :
 {
     _layout = new QVBoxLayout;
     setLayout(_layout);
-
-    //demo
-    newItemInspected();
 }
 
 InspectorPanel::~InspectorPanel()
@@ -27,15 +24,6 @@ void InspectorPanel::newItemInspected()
     }
 
     // Demo
-    itemInspected = new CommonInterface;
+    itemInspected = new intervalInspectorView;
     _layout->addWidget(itemInspected);
 }
-
-void InspectorPanel::addSection(QString name, QWidget *content)
-{
-    BasicElement* section = new BasicElement(this);
-    section->renameSection(name);
-    section->addToSection(content);
-    _layout->addWidget(section);
-}
-

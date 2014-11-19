@@ -18,8 +18,7 @@ public:
     explicit InspectorPanel(QWidget *parent = 0);
     ~InspectorPanel();
 
-    void newItemInspected();
-    void addSection(QString name, QWidget* content);
+    void newItemInspected(); //todo : utiliser un enum pour les différents types
 
 private:
 

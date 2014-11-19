@@ -1,5 +1,10 @@
 #include "basicelement.h"
 
+#include <QLayout>
+#include <QLabel>
+#include <QToolButton>
+
+
 BasicElement::BasicElement(QWidget *parent) :
     QWidget(parent)
 {
@@ -26,18 +31,23 @@ BasicElement::BasicElement(QWidget *parent) :
     connect(_btn, SIGNAL(released()), this, SLOT(expend()));
 
     // INIT
-    isExpended = true;
+    _isExpended = true;
     _btn->setArrowType(Qt::DownArrow);
     renameSection("Section Name");
 
     setLayout(globalLayout);
 }
 
+BasicElement::~BasicElement()
+{
+
+}
+
 void BasicElement::expend()
 {
-    isExpended = !isExpended;
-    _container->setVisible(isExpended);
-    if (isExpended) {
+    _isExpended = !_isExpended;
+    _container->setVisible(_isExpended);
+    if (_isExpended) {
         _btn->setArrowType(Qt::DownArrow);
     }
     else {

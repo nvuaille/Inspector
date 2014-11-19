@@ -5,6 +5,7 @@
 class QVBoxLayout;
 class QLineEdit;
 class QPushButton;
+class BasicElement;
 
 class CommonInterface : public QWidget
 {
@@ -15,8 +16,22 @@ public:
 signals:
 
 public slots:
-    void addSection(QString name, QWidget* content);
-    void setValues();
+    // Manage Sections
+    void addNewSection(QString sectionName, QWidget* content);
+    void addInSection(QString sectionName, QWidget* content);
+    void insertSection(int index, QString name, QWidget* content = 0);
+    void removeSection(QString sectionName);
+    void moveSection(int oldIndex, int newIndex, QString sectionName = "");
+    void moveSections();
+
+    // Manage Values
+    void updateDisplayedValues();
+    void changeColor();
+
+    // Navigation
+//    BasicElement & getSection(QString name) const;
+
+    QVBoxLayout* contentLayout() {return _layout;}
 
 private:
     void init();

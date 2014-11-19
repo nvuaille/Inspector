@@ -17,10 +17,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         inspectorpanel.cpp \
     basicelement.cpp \
-    commoninterface.cpp
+    commoninterface.cpp \
+    intervalinspectorview.cpp
 
 HEADERS  += inspectorpanel.h \
     basicelement.h \
-    commoninterface.h
+    commoninterface.h \
+    intervalinspectorview.h
 
 FORMS    += inspectorpanel.ui
