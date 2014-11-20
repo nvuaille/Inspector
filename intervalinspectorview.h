@@ -3,15 +3,18 @@
 
 #include "commoninterface.h"
 
-class intervalInspectorView : public CommonInterface
+class IntervalInspectorView : public CommonInterface
 {
     Q_OBJECT
 public:
-    explicit intervalInspectorView(QWidget *parent = 0);
+    explicit IntervalInspectorView(QObject *object, QWidget *parent = 0);
 
 signals:
 
 public slots:
+    void addAutomation();
+
+private:
 
 };
 

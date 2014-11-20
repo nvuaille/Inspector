@@ -7,7 +7,10 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     InspectorPanel w;
 
-    w.newItemInspected();
+    QObject* test = new QObject;
+    test->setObjectName("Bobby Watson");
+
+    w.newItemInspected(test);
 
     w.show();
 

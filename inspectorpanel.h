@@ -18,7 +18,7 @@ public:
     explicit InspectorPanel(QWidget *parent = 0);
     ~InspectorPanel();
 
-    void newItemInspected(); //todo : utiliser un enum pour les différents types
+    void newItemInspected(QObject *object = 0);
 
 private:
 

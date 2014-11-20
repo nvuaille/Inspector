@@ -11,25 +11,22 @@ class CommonInterface : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CommonInterface(QWidget *parent = 0);
+    explicit CommonInterface(QObject *inspectedObj = 0, QWidget *parent = 0);
 
 signals:
 
 public slots:
     // Manage Sections
     void addNewSection(QString sectionName, QWidget* content);
-    void addInSection(QString sectionName, QWidget* content);
+    void addInSection(QString sectionName, QWidget* content); //todo
     void insertSection(int index, QString name, QWidget* content = 0);
-    void removeSection(QString sectionName);
-    void moveSection(int oldIndex, int newIndex, QString sectionName = "");
-    void moveSections();
+    void removeSection(QString sectionName); //todo
+    void moveSection(int oldIndex, int newIndex, QString sectionName = ""); //todo
+    void moveSections(); //todo
 
     // Manage Values
-    void updateDisplayedValues();
-    void changeColor();
-
-    // Navigation
-//    BasicElement & getSection(QString name) const;
+    void updateDisplayedValues(QObject *obj);
+    void changeColor(); //todo
 
     QVBoxLayout* contentLayout() {return _layout;}
 
@@ -40,6 +37,9 @@ private:
     QLineEdit *_objectName;
     QPushButton *_colorButton;
     QPixmap *_colorButtonPixmap;
+    QLineEdit *_comments;
+
+    QObject *_inspectedObject;
 };
 
 #endif // COMMONINTERFACE_H

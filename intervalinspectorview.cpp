@@ -6,11 +6,9 @@
 #include <QWidget>
 #include <QToolButton>
 
-intervalInspectorView::intervalInspectorView(QWidget *parent) :
+IntervalInspectorView::IntervalInspectorView(QObject *object, QWidget *parent) :
     CommonInterface(parent)
 {
-
-
     // Add Automation Section
     QWidget* title = new QWidget;
     QHBoxLayout* titleLayout = new QHBoxLayout;
@@ -24,8 +22,20 @@ intervalInspectorView::intervalInspectorView(QWidget *parent) :
  //   connect(_btn, SIGNAL(released()), this, SLOT(addAutomation()));
     btn->setText("+");
 
-     contentLayout()->insertWidget(2, title);
+    contentLayout()->insertWidget(2, title);
+    QFrame* line = new QFrame();
+    line->setFrameShape(QFrame::HLine);
+    line->setLineWidth(2);
 
-    // Other section
-    insertSection(2, "Duration", new QSpinBox );
+    // Sections
+    contentLayout()->insertWidget(3, line);
+    insertSection(4, "Duration", new QSpinBox );
+
+    // display data
+    updateDisplayedValues(object);
+}
+
+void IntervalInspectorView::addAutomation()
+{
+
 }

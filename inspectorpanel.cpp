@@ -17,13 +17,14 @@ InspectorPanel::~InspectorPanel()
 {
 }
 
-void InspectorPanel::newItemInspected()
+void InspectorPanel::newItemInspected(QObject *object)
 {
     if(itemInspected != nullptr) {
         delete itemInspected;
     }
+    // todo : switch on cast result
 
     // Demo
-    itemInspected = new intervalInspectorView;
+    itemInspected = new IntervalInspectorView(object, this);
     _layout->addWidget(itemInspected);
 }

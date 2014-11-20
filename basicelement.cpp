@@ -8,7 +8,24 @@
 BasicElement::BasicElement(QWidget *parent) :
     QWidget(parent)
 {
+    init();
+    renameSection("Section Name");
+}
 
+BasicElement::BasicElement(QString name, QWidget *content, QWidget *parent)
+{
+    init();
+    renameSection(name);
+    addToSection(content);
+}
+
+BasicElement::~BasicElement()
+{
+
+}
+
+void BasicElement::init()
+{
     // HEADER : arrow and name
     QWidget* title = new QWidget;
     QHBoxLayout* titleLayout = new QHBoxLayout;
@@ -33,14 +50,8 @@ BasicElement::BasicElement(QWidget *parent) :
     // INIT
     _isExpended = true;
     _btn->setArrowType(Qt::DownArrow);
-    renameSection("Section Name");
 
     setLayout(globalLayout);
-}
-
-BasicElement::~BasicElement()
-{
-
 }
 
 void BasicElement::expend()
@@ -65,4 +76,12 @@ void BasicElement::addToSection(QWidget *newWidget)
     _containerLayout->addWidget(newWidget);
     _container->setLayout(_containerLayout);
 }
+
+void BasicElement::insertInSection(int index, QWidget *newWidget)
+{
+    _containerLayout->insertWidget(index, newWidget);
+    _container->setLayout(_containerLayout);
+}
+
+
 
