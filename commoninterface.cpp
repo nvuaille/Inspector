@@ -29,20 +29,12 @@ void CommonInterface::init()
     // Object Name : label + lineEdit in a container
     QWidget *nameLine = new QWidget(this);
     QHBoxLayout *nameLayout = new QHBoxLayout;
-    QLabel *nameLabel = new QLabel("Name : ");
     _objectName = new QLineEdit;
     nameLine->setObjectName("ElementName");
 
-    nameLayout->addWidget(nameLabel);
     nameLayout->addWidget(_objectName);
     nameLine->setLayout(nameLayout);
-    _layout->addWidget(nameLine);
 
-    // Object Color : label + button in a container.
-    QWidget *colorLine = new QWidget(this);
-    QHBoxLayout *colorLayout = new QHBoxLayout;
-    QLabel *colorLabel = new QLabel("Color : ");
-    colorLine->setObjectName("ElementColor");
     _colorButton = new QPushButton;
     _colorButton->setMaximumSize(QSize(1.5*COLOR_ICON_SIZE, 1.5*COLOR_ICON_SIZE));
     _colorButton->setIconSize(QSize(COLOR_ICON_SIZE, COLOR_ICON_SIZE));
@@ -50,11 +42,8 @@ void CommonInterface::init()
 
     _colorButton->setIcon(QIcon(*_colorButtonPixmap));
 
-    colorLayout->addWidget(colorLabel);
-    colorLayout->addWidget(_colorButton);
-    colorLayout->addWidget(new QLabel);  // manage space. --> trouver mieux !!
-    colorLine->setLayout(colorLayout);
-    _layout->addWidget(colorLine);
+    nameLayout->addWidget(_colorButton);
+    _layout->addWidget(nameLine);
 
     // Connection
     connect(_colorButton, SIGNAL(clicked()), this, SLOT(changeColor()));

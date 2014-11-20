@@ -28,8 +28,8 @@ IntervalInspectorView::IntervalInspectorView(QObject *object, QWidget *parent) :
     line->setLineWidth(2);
 
     // Sections
-    contentLayout()->insertWidget(3, line);
-    insertSection(4, "Duration", new QSpinBox );
+    contentLayout()->insertWidget(2, line);
+    insertSection(3, "Duration", new QSpinBox );
 
     // display data
     updateDisplayedValues(object);
