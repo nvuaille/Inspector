@@ -1,19 +1,19 @@
-#ifndef BASICELEMENT_H
-#define BASICELEMENT_H
+#ifndef INSPECTORSECTIONWIDGET_H
+#define INSPECTORSECTIONWIDGET_H
 
 #include <QWidget>
 class QVBoxLayout;
 class QLabel;
 class QToolButton;
 
-class BasicElement : public QWidget
+class InspectorSectionWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit BasicElement(QWidget *parent = 0);
-    BasicElement(QString name, QWidget *content, QWidget *parent = 0);
-    ~BasicElement();
-    BasicElement(const BasicElement&);
+    explicit InspectorSectionWidget(QWidget *parent = 0);
+    InspectorSectionWidget(QString name, QWidget *content, QWidget *parent = 0);
+    ~InspectorSectionWidget();
+    InspectorSectionWidget(const InspectorSectionWidget&);
 
     void init();
 
@@ -40,4 +40,4 @@ private:
     bool _isExpended;
 };
 
-#endif // BASICELEMENT_H
+#endif // INSPECTORSECTIONWIDGET_H

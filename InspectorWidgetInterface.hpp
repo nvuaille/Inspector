@@ -1,17 +1,17 @@
-#ifndef COMMONINTERFACE_H
-#define COMMONINTERFACE_H
+#ifndef INSPECTORWIDGETINTERFACE_H
+#define INSPECTORWIDGETINTERFACE_H
 
 #include <QWidget>
 class QVBoxLayout;
 class QLineEdit;
 class QPushButton;
-class BasicElement;
+class InspectorSectionWidget;
 
-class CommonInterface : public QWidget
+class InspectorWidgetInterface : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CommonInterface(QObject *inspectedObj = 0, QWidget *parent = 0);
+    explicit InspectorWidgetInterface(QObject *inspectedObj = 0, QWidget *parent = 0);
 
 signals:
 
@@ -42,4 +42,4 @@ private:
     QObject *_inspectedObject;
 };
 
-#endif // COMMONINTERFACE_H
+#endif // INSPECTORWIDGETINTERFACE_H

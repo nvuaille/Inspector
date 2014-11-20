@@ -15,14 +15,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        inspectorpanel.cpp \
-    basicelement.cpp \
-    commoninterface.cpp \
-    intervalinspectorview.cpp
+    InspectorPanel.cpp \
+    InspectorSectionWidget.cpp \
+    InspectorWidgetInterface.cpp \
+    IntervalInspectorview.cpp
 
-HEADERS  += inspectorpanel.h \
-    basicelement.h \
-    commoninterface.h \
-    intervalinspectorview.h
+HEADERS  += InspectorPanel.hpp \
+    InspectorSectionWidget.hpp \
+    InspectorWidgetInterface.hpp \
+    IntervalInspectorview.hpp
 
-FORMS    += inspectorpanel.ui
+FORMS    += InspectorPanel.ui
+
+OTHER_FILES += \
+    Inspector.pro.user

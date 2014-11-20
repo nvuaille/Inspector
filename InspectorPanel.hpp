@@ -4,7 +4,7 @@
 #include <QWidget>
 
 class QVBoxLayout;
-class CommonInterface;
+class InspectorWidgetInterface;
 
 namespace Ui {
 class InspectorPanel;
@@ -23,7 +23,7 @@ public:
 private:
 
     QVBoxLayout* _layout;
-    CommonInterface* itemInspected = nullptr;
+    InspectorWidgetInterface* itemInspected = nullptr;
 
 };
 

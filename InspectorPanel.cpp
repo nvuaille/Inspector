@@ -1,10 +1,10 @@
-#include "inspectorpanel.h"
+#include "InspectorPanel.hpp"
 #include "ui_inspectorpanel.h"
 #include "QPushButton"
 #include <QLayout>
 
-#include "intervalinspectorview.h"
-#include "basicelement.h"
+#include "IntervalInspectorview.hpp"
+#include "InspectorSectionWidget.hpp"
 
 InspectorPanel::InspectorPanel(QWidget *parent) :
     QWidget(parent)

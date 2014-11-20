@@ -1,4 +1,4 @@
-#include "intervalinspectorview.h"
+#include "IntervalInspectorview.hpp"
 
 #include <QLabel>
 #include <QSpinBox>
@@ -7,7 +7,7 @@
 #include <QToolButton>
 
 IntervalInspectorView::IntervalInspectorView(QObject *object, QWidget *parent) :
-    CommonInterface(parent)
+    InspectorWidgetInterface(parent)
 {
     // Add Automation Section
     QWidget* title = new QWidget;

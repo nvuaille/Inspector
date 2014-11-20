@@ -1,4 +1,4 @@
-#include "inspectorpanel.h"
+#include "InspectorPanel.hpp"
 
 #include <QApplication>
 

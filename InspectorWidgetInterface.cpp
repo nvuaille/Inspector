@@ -1,5 +1,5 @@
-#include "commoninterface.h"
-#include "basicelement.h"
+#include "InspectorSectionWidget.hpp"
+#include "InspectorWidgetInterface.hpp"
 
 #include <QLayout>
 #include <QLineEdit>
@@ -9,7 +9,7 @@
 
 static const int COLOR_ICON_SIZE = 21;
 
-CommonInterface::CommonInterface(QObject *inspectedObj, QWidget *parent) :
+InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidget *parent) :
     QWidget(parent), _inspectedObject{inspectedObj}
 {
     _layout = new QVBoxLayout;
@@ -24,7 +24,7 @@ CommonInterface::CommonInterface(QObject *inspectedObj, QWidget *parent) :
 
 }
 
-void CommonInterface::init()
+void InspectorWidgetInterface::init()
 {
     // Object Name : label + lineEdit in a container
     QWidget *nameLine = new QWidget(this);
@@ -50,43 +50,43 @@ void CommonInterface::init()
 }
 
 
-void CommonInterface::addNewSection(QString sectionName, QWidget *content)
+void InspectorWidgetInterface::addNewSection(QString sectionName, QWidget *content)
 {
-    BasicElement* section = new BasicElement(this);
+    InspectorSectionWidget* section = new InspectorSectionWidget(this);
     section->renameSection(sectionName);
     section->addToSection(content);
     _layout->addWidget(section);
 }
 
-void CommonInterface::addInSection(QString sectionName, QWidget *content)
+void InspectorWidgetInterface::addInSection(QString sectionName, QWidget *content)
 {
 
 }
 
-void CommonInterface::insertSection(int index, QString name, QWidget *content)
+void InspectorWidgetInterface::insertSection(int index, QString name, QWidget *content)
 {
-    BasicElement* section = new BasicElement(this);
+    InspectorSectionWidget* section = new InspectorSectionWidget(this);
     section->renameSection(name);
     section->addToSection(content);
     _layout->insertWidget(index, section);
 }
 
-void CommonInterface::removeSection(QString sectionName)
+void InspectorWidgetInterface::removeSection(QString sectionName)
 {
 
 }
 
-void CommonInterface::moveSection(int oldIndex, int newIndex, QString sectionName)
+void InspectorWidgetInterface::moveSection(int oldIndex, int newIndex, QString sectionName)
 {
 
 }
 
-void CommonInterface::moveSections()
+void InspectorWidgetInterface::moveSections()
 {
 
 }
 
-void CommonInterface::updateDisplayedValues(QObject *obj)
+void InspectorWidgetInterface::updateDisplayedValues(QObject *obj)
 {
     // DEMO
     _objectName->setText(obj->objectName()); // récupérer direct le vrai nom
@@ -96,7 +96,7 @@ void CommonInterface::updateDisplayedValues(QObject *obj)
     _inspectedObject = obj;
 }
 
-void CommonInterface::changeColor()
+void InspectorWidgetInterface::changeColor()
 {
 
 }

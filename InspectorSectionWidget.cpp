@@ -1,30 +1,30 @@
-#include "basicelement.h"
+#include "InspectorSectionWidget.hpp"
 
 #include <QLayout>
 #include <QLabel>
 #include <QToolButton>
 
 
-BasicElement::BasicElement(QWidget *parent) :
+InspectorSectionWidget::InspectorSectionWidget(QWidget *parent) :
     QWidget(parent)
 {
     init();
     renameSection("Section Name");
 }
 
-BasicElement::BasicElement(QString name, QWidget *content, QWidget *parent)
+InspectorSectionWidget::InspectorSectionWidget(QString name, QWidget *content, QWidget *parent)
 {
     init();
     renameSection(name);
     addToSection(content);
 }
 
-BasicElement::~BasicElement()
+InspectorSectionWidget::~InspectorSectionWidget()
 {
 
 }
 
-void BasicElement::init()
+void InspectorSectionWidget::init()
 {
     // HEADER : arrow and name
     QWidget* title = new QWidget;
@@ -54,7 +54,7 @@ void BasicElement::init()
     setLayout(globalLayout);
 }
 
-void BasicElement::expend()
+void InspectorSectionWidget::expend()
 {
     _isExpended = !_isExpended;
     _container->setVisible(_isExpended);
@@ -66,18 +66,18 @@ void BasicElement::expend()
     }
 }
 
-void BasicElement::renameSection(QString newName)
+void InspectorSectionWidget::renameSection(QString newName)
 {
     _sectionTitle->setText(newName);
 }
 
-void BasicElement::addToSection(QWidget *newWidget)
+void InspectorSectionWidget::addToSection(QWidget *newWidget)
 {
     _containerLayout->addWidget(newWidget);
     _container->setLayout(_containerLayout);
 }
 
-void BasicElement::insertInSection(int index, QWidget *newWidget)
+void InspectorSectionWidget::insertInSection(int index, QWidget *newWidget)
 {
     _containerLayout->insertWidget(index, newWidget);
     _container->setLayout(_containerLayout);

@@ -1,9 +1,9 @@
 #ifndef INTERVALINSPECTORVIEW_H
 #define INTERVALINSPECTORVIEW_H
 
-#include "commoninterface.h"
+#include "InspectorWidgetInterface.hpp"
 
-class IntervalInspectorView : public CommonInterface
+class IntervalInspectorView : public InspectorWidgetInterface
 {
     Q_OBJECT
 public:
