@@ -7,10 +7,12 @@
 #include <QWidget>
 #include <QToolButton>
 #include <QDebug>
+#include <QScrollArea>
 
 IntervalInspectorView::IntervalInspectorView(QObject *object, QWidget *parent) :
     InspectorWidgetInterface(parent)
 {
+    setObjectName("Interval");
     // Add Automation Section
     QWidget* automTitle = new QWidget;
     QHBoxLayout* automTitleLayout = new QHBoxLayout;
@@ -30,8 +32,8 @@ IntervalInspectorView::IntervalInspectorView(QObject *object, QWidget *parent) :
     line->setLineWidth(2);
 
     // Sections
-    insertSection(1, "Duration", new QSpinBox );
-    insertSection(3, "Automations", new InspectorSectionWidget);
+    addInSection("Properties", "Duration", new QSpinBox);
+    addInSection("Properties", "Automations", new InspectorSectionWidget);
     static_cast<QVBoxLayout*>(layout())->insertWidget(layout()->count()-1, automTitle);
     static_cast<QVBoxLayout*>(layout())->insertWidget(layout()->count()-1, line);
 
@@ -41,6 +43,9 @@ IntervalInspectorView::IntervalInspectorView(QObject *object, QWidget *parent) :
 
 void IntervalInspectorView::addAutomation()
 {
-//    InspectorSectionWidget* autom = layout()->findChild<InspectorSectionWidget*>("Automations");
-//    autom->addToSection(new InspectorSectionWidget);
+    InspectorSectionWidget* autom = this->findChild<InspectorSectionWidget*>("Automations");
+    qDebug() << this->children();
+    if (autom != nullptr) {
+        autom->addToCurrentSection(new InspectorSectionWidget);
+    }
 }

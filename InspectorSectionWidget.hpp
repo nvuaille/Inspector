@@ -24,16 +24,16 @@ public slots:
 
     // Manage section
     void renameSection(QString newName);
-    void addToSection(QWidget *newWidget);
+    void addToCurrentSection(QWidget *newWidget);
     void insertInSection(int index, QWidget *newWidget);
 
 private:
 
-    QWidget* _container;
-    QVBoxLayout* _containerLayout;
+    QWidget* _container = nullptr;
+    QVBoxLayout* _containerLayout = nullptr;
 
-    QLabel* _sectionTitle;
-    QToolButton* _btn;
+    QLabel* _sectionTitle = nullptr;
+    QToolButton* _btn = nullptr;
 
     bool _isExpended;
 };

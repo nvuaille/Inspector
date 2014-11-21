@@ -6,6 +6,8 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QSpacerItem>
+#include <QScrollArea>
+#include <QScrollBar>
 #include <QDebug>
 
 static const int COLOR_ICON_SIZE = 21;
@@ -37,7 +39,21 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
 
     // Connection
     connect(_colorButton, SIGNAL(clicked()), this, SLOT(changeColor()));
+/*
+    _scrollArea = new QScrollArea;
+    _scrollArea->setLayout(new QVBoxLayout);
+    _layout->addWidget(_scrollArea);
+*/
+    QScrollArea *propertiesArea = new QScrollArea;
+    propertiesArea->setVerticalScrollBar(new QScrollBar);
+    QWidget *areaContent = new QWidget;
+    QVBoxLayout *contentLayout = new QVBoxLayout;
+    areaContent->setLayout(contentLayout);
+    propertiesArea->setMinimumHeight(150);
+    propertiesArea->setWidgetResizable(true);
+    propertiesArea->setWidget(areaContent);
 
+    addNewSection("Properties", propertiesArea);
     _comments = new QLineEdit;
     addNewSection("Comment", _comments);
 }
@@ -46,20 +62,32 @@ void InspectorWidgetInterface::addNewSection(QString sectionName, QWidget *conte
 {
     InspectorSectionWidget* section = new InspectorSectionWidget(this);
     section->renameSection(sectionName);
-    section->addToSection(content);
+    section->addToCurrentSection(content);
+    section->setObjectName(sectionName);
     _layout->addWidget(section);
 }
 
-void InspectorWidgetInterface::addInSection(QString sectionName, QWidget *content)
+void InspectorWidgetInterface::addInSection(QString sectionName, QString objectName, QWidget *content)
 {
+    InspectorSectionWidget* section = findChild<InspectorSectionWidget*>(sectionName);
 
+    if(section != nullptr) {
+        if(sectionName.compare("Properties") == 0) {
+            section->findChild<QScrollArea*>()->widget()->layout()->addWidget(new InspectorSectionWidget(objectName, content));
+        }
+        else
+        {
+            section->addToCurrentSection(content);
+            section->renameSection(objectName);
+        }
+    }
 }
 
 void InspectorWidgetInterface::insertSection(int index, QString name, QWidget *content)
 {
     InspectorSectionWidget* section = new InspectorSectionWidget(this);
     section->renameSection(name);
-    section->addToSection(content);
+    section->addToCurrentSection(content);
     section->setObjectName(name);
     _layout->insertWidget(index, section);
 }

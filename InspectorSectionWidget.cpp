@@ -3,7 +3,7 @@
 #include <QLayout>
 #include <QLabel>
 #include <QToolButton>
-
+#include <QDebug>
 
 InspectorSectionWidget::InspectorSectionWidget(QWidget *parent) :
     QWidget(parent)
@@ -42,7 +42,8 @@ InspectorSectionWidget::InspectorSectionWidget(QString name, QWidget *content, Q
     InspectorSectionWidget(parent)
 {
     renameSection(name);
-    addToSection(content);
+    setObjectName(name);
+    addToCurrentSection(content);
 }
 
 InspectorSectionWidget::~InspectorSectionWidget()
@@ -65,9 +66,10 @@ void InspectorSectionWidget::expend()
 void InspectorSectionWidget::renameSection(QString newName)
 {
     _sectionTitle->setText(newName);
+ //   _sectionTitle->setObjectName(newName);
 }
 
-void InspectorSectionWidget::addToSection(QWidget *newWidget)
+void InspectorSectionWidget::addToCurrentSection(QWidget *newWidget)
 {
     _containerLayout->addWidget(newWidget);
     _container->setLayout(_containerLayout);

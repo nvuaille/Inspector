@@ -13,6 +13,7 @@ InspectorPanel::InspectorPanel(QWidget *parent) :
 {
     _layout = new QVBoxLayout;
     setLayout(_layout);
+    //setMaximumHeight(300);
 }
 
 InspectorPanel::~InspectorPanel()
