@@ -15,8 +15,6 @@ public:
     ~InspectorSectionWidget();
     InspectorSectionWidget(const InspectorSectionWidget&);
 
-    void init();
-
 signals:
 
 public slots:

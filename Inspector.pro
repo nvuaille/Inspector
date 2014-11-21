@@ -18,12 +18,15 @@ SOURCES += main.cpp\
     InspectorPanel.cpp \
     InspectorSectionWidget.cpp \
     InspectorWidgetInterface.cpp \
-    IntervalInspectorview.cpp
+    IntervalInspectorview.cpp \
+    InspectorWidget.cpp
 
 HEADERS  += InspectorPanel.hpp \
     InspectorSectionWidget.hpp \
     InspectorWidgetInterface.hpp \
-    IntervalInspectorview.hpp
+    IntervalInspectorview.hpp \
+    InspectorWidgetFactoryInterface.hpp \
+    InspectorWidget.hpp
 
 FORMS    += InspectorPanel.ui
 

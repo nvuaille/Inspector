@@ -1,6 +1,7 @@
 #include "InspectorPanel.hpp"
 
 #include <QApplication>
+#include <QDebug>
 
 int main(int argc, char *argv[])
 {
@@ -9,7 +10,6 @@ int main(int argc, char *argv[])
 
     QObject* test = new QObject;
     test->setObjectName("Bobby Watson");
-
     w.newItemInspected(test);
 
     w.show();

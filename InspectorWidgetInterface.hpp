@@ -28,11 +28,7 @@ public slots:
     void updateDisplayedValues(QObject *obj);
     void changeColor(); //todo
 
-    QVBoxLayout* contentLayout() {return _layout;}
-
 private:
-    void init();
-
     QVBoxLayout *_layout;
     QLineEdit *_objectName;
     QPushButton *_colorButton;

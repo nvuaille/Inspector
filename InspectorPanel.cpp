@@ -2,9 +2,11 @@
 #include "ui_inspectorpanel.h"
 #include "QPushButton"
 #include <QLayout>
+#include <QDebug>
 
 #include "IntervalInspectorview.hpp"
 #include "InspectorSectionWidget.hpp"
+#include "InspectorWidget.hpp"
 
 InspectorPanel::InspectorPanel(QWidget *parent) :
     QWidget(parent)
@@ -25,6 +27,8 @@ void InspectorPanel::newItemInspected(QObject *object)
     // todo : switch on cast result
 
     // Demo
-    itemInspected = new IntervalInspectorView(object, this);
-    _layout->addWidget(itemInspected);
+    InspectorWidget *factory = new InspectorWidget;
+    InspectorWidgetInterface* item = factory->makeWidget(object);
+
+    _layout->addWidget(item);
 }

@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QSpacerItem>
+#include <QDebug>
 
 static const int COLOR_ICON_SIZE = 21;
 
@@ -15,17 +16,6 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
     _layout = new QVBoxLayout;
     setLayout(_layout);
 
-    init();
-    _comments = new QLineEdit;
-    addNewSection("Comment", _comments);
-    updateDisplayedValues(_inspectedObject);
-
-    //findChild<QWidget*>("ElementColor")->setVisible(false);
-
-}
-
-void InspectorWidgetInterface::init()
-{
     // Object Name : label + lineEdit in a container
     QWidget *nameLine = new QWidget(this);
     QHBoxLayout *nameLayout = new QHBoxLayout;
@@ -47,8 +37,10 @@ void InspectorWidgetInterface::init()
 
     // Connection
     connect(_colorButton, SIGNAL(clicked()), this, SLOT(changeColor()));
-}
 
+    _comments = new QLineEdit;
+    addNewSection("Comment", _comments);
+}
 
 void InspectorWidgetInterface::addNewSection(QString sectionName, QWidget *content)
 {
@@ -68,6 +60,7 @@ void InspectorWidgetInterface::insertSection(int index, QString name, QWidget *c
     InspectorSectionWidget* section = new InspectorSectionWidget(this);
     section->renameSection(name);
     section->addToSection(content);
+    section->setObjectName(name);
     _layout->insertWidget(index, section);
 }
 
@@ -89,11 +82,13 @@ void InspectorWidgetInterface::moveSections()
 void InspectorWidgetInterface::updateDisplayedValues(QObject *obj)
 {
     // DEMO
-    _objectName->setText(obj->objectName()); // récupérer direct le vrai nom
-    _colorButtonPixmap->fill(QColor(Qt::gray)); // récupérer direct la vraie couleur
-    _colorButton->setIcon(QIcon(*_colorButtonPixmap));
-    _comments->setText(obj->metaObject()->className());
-    _inspectedObject = obj;
+    if (obj != nullptr) {
+        _objectName->setText(obj->objectName()); // récupérer direct le vrai nom
+        _colorButtonPixmap->fill(QColor(Qt::gray)); // récupérer direct la vraie couleur
+        _colorButton->setIcon(QIcon(*_colorButtonPixmap));
+        _comments->setText(obj->metaObject()->className());
+        _inspectedObject = obj;
+    }
 }
 
 void InspectorWidgetInterface::changeColor()

@@ -8,24 +8,6 @@
 InspectorSectionWidget::InspectorSectionWidget(QWidget *parent) :
     QWidget(parent)
 {
-    init();
-    renameSection("Section Name");
-}
-
-InspectorSectionWidget::InspectorSectionWidget(QString name, QWidget *content, QWidget *parent)
-{
-    init();
-    renameSection(name);
-    addToSection(content);
-}
-
-InspectorSectionWidget::~InspectorSectionWidget()
-{
-
-}
-
-void InspectorSectionWidget::init()
-{
     // HEADER : arrow and name
     QWidget* title = new QWidget;
     QHBoxLayout* titleLayout = new QHBoxLayout;
@@ -52,6 +34,20 @@ void InspectorSectionWidget::init()
     _btn->setArrowType(Qt::DownArrow);
 
     setLayout(globalLayout);
+
+    renameSection("Section Name");
+}
+
+InspectorSectionWidget::InspectorSectionWidget(QString name, QWidget *content, QWidget *parent) :
+    InspectorSectionWidget(parent)
+{
+    renameSection(name);
+    addToSection(content);
+}
+
+InspectorSectionWidget::~InspectorSectionWidget()
+{
+
 }
 
 void InspectorSectionWidget::expend()

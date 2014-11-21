@@ -24,7 +24,6 @@ private:
 
     QVBoxLayout* _layout;
     InspectorWidgetInterface* itemInspected = nullptr;
-
 };
 
 #endif // INSPECTORPANEL_H
