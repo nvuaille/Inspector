@@ -18,8 +18,9 @@ signals:
 
 public slots:
     // Manage Sections
-    void addNewSection(QString sectionName, QWidget* content);
-    void addInSection(QString sectionName, QString objectName, QWidget* content); //todo
+    void addNewSection(QString sectionName, QWidget* content = 0);
+    void addSubSection(QString parentSection, QString subSection, InspectorSectionWidget *content);
+    void addInSection(QString sectionName, QWidget* content); //todo
     void insertSection(int index, QString name, QWidget* content = 0);
     void removeSection(QString sectionName); //todo
     void moveSection(int oldIndex, int newIndex, QString sectionName = ""); //todo

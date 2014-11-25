@@ -16,6 +16,7 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
     QWidget(parent), _inspectedObject{inspectedObj}
 {
     _layout = new QVBoxLayout;
+    _layout->setMargin(5);
     setLayout(_layout);
 
     // Object Name : label + lineEdit in a container
@@ -39,46 +40,41 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
 
     // Connection
     connect(_colorButton, SIGNAL(clicked()), this, SLOT(changeColor()));
-/*
-    _scrollArea = new QScrollArea;
-    _scrollArea->setLayout(new QVBoxLayout);
-    _layout->addWidget(_scrollArea);
-*/
-    QScrollArea *propertiesArea = new QScrollArea;
-    propertiesArea->setVerticalScrollBar(new QScrollBar);
-    QWidget *areaContent = new QWidget;
-    QVBoxLayout *contentLayout = new QVBoxLayout;
-    areaContent->setLayout(contentLayout);
-    propertiesArea->setMinimumHeight(150);
-    propertiesArea->setWidgetResizable(true);
-    propertiesArea->setWidget(areaContent);
 
-    addNewSection("Properties", propertiesArea);
+    //addNewSection("Properties");
+   // _layout->addWidget(new InspectorSectionWidget("Properties",this));
     _comments = new QLineEdit;
     addNewSection("Comment", _comments);
+    _layout->addStretch();
 }
 
 void InspectorWidgetInterface::addNewSection(QString sectionName, QWidget *content)
 {
-    InspectorSectionWidget* section = new InspectorSectionWidget(this);
-    section->renameSection(sectionName);
-    section->addToCurrentSection(content);
-    section->setObjectName(sectionName);
+    InspectorSectionWidget* section = new InspectorSectionWidget(sectionName, this);
+    section->addContent(content);
     _layout->addWidget(section);
 }
 
-void InspectorWidgetInterface::addInSection(QString sectionName, QString objectName, QWidget *content)
+void InspectorWidgetInterface::addSubSection(QString parentSection, QString subSection, InspectorSectionWidget *content)
+{
+    InspectorSectionWidget* section = findChild<InspectorSectionWidget*>(parentSection);
+
+    if(section != nullptr) {
+        {
+            content->renameSection(subSection);
+            content->setObjectName(subSection);
+            section->addContent(content);
+        }
+    }
+}
+
+void InspectorWidgetInterface::addInSection(QString sectionName, QWidget *content)
 {
     InspectorSectionWidget* section = findChild<InspectorSectionWidget*>(sectionName);
 
     if(section != nullptr) {
-        if(sectionName.compare("Properties") == 0) {
-            section->findChild<QScrollArea*>()->widget()->layout()->addWidget(new InspectorSectionWidget(objectName, content));
-        }
-        else
         {
-            section->addToCurrentSection(content);
-            section->renameSection(objectName);
+            section->addContent(content);
         }
     }
 }
@@ -87,7 +83,7 @@ void InspectorWidgetInterface::insertSection(int index, QString name, QWidget *c
 {
     InspectorSectionWidget* section = new InspectorSectionWidget(this);
     section->renameSection(name);
-    section->addToCurrentSection(content);
+    section->addContent(content);
     section->setObjectName(name);
     _layout->insertWidget(index, section);
 }

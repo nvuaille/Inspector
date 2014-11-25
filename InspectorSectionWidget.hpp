@@ -5,15 +5,15 @@
 class QVBoxLayout;
 class QLabel;
 class QToolButton;
+class QScrollArea;
 
 class InspectorSectionWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit InspectorSectionWidget(QWidget *parent = 0);
-    InspectorSectionWidget(QString name, QWidget *content, QWidget *parent = 0);
+    InspectorSectionWidget(QString name, QWidget *parent = 0);
     ~InspectorSectionWidget();
-    InspectorSectionWidget(const InspectorSectionWidget&);
 
 signals:
 
@@ -24,12 +24,12 @@ public slots:
 
     // Manage section
     void renameSection(QString newName);
-    void addToCurrentSection(QWidget *newWidget);
+    void addContent(QWidget *newWidget);
     void insertInSection(int index, QWidget *newWidget);
 
 private:
 
-    QWidget* _container = nullptr;
+    QScrollArea* _container = nullptr;
     QVBoxLayout* _containerLayout = nullptr;
 
     QLabel* _sectionTitle = nullptr;
