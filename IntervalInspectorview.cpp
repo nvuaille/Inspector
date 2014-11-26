@@ -35,6 +35,9 @@ IntervalInspectorView::IntervalInspectorView(ObjectInterval *object, QWidget *pa
     // Sections
     static_cast<QVBoxLayout*>(layout())->insertWidget(layout()->count()-2, automTitle);
     insertSection( layout()->count()-2, "Automations", new InspectorSectionWidget);
+    static_cast<QVBoxLayout*>(layout())->insertWidget(layout()->count()-2, line);
+    insertSection( layout()->count()-2, "Start", new QLabel("Start state"));
+    insertSection( layout()->count()-2, "End", new QLabel("End state"));
 
     // display data
     updateDisplayedValues(object);
@@ -45,6 +48,7 @@ void IntervalInspectorView::addAutomation()
     InspectorSectionWidget* autom = findChild<InspectorSectionWidget*>("Automations");
     if (autom != nullptr) {
         autom->addContent(new InspectorSectionWidget);
+
     }
 }
 

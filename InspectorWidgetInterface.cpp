@@ -10,6 +10,7 @@
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QDebug>
+#include <QColorDialog>
 
 static const int COLOR_ICON_SIZE = 21;
 
@@ -37,17 +38,18 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
     _colorButton->setMaximumSize(QSize(1.5*COLOR_ICON_SIZE, 1.5*COLOR_ICON_SIZE));
     _colorButton->setIconSize(QSize(COLOR_ICON_SIZE, COLOR_ICON_SIZE));
     _colorButtonPixmap = new QPixmap(4 * COLOR_ICON_SIZE / 3, 4 * COLOR_ICON_SIZE / 3);
+    setColor(Qt::gray);
     _colorButton->setIcon(QIcon(*_colorButtonPixmap));
 
     nameLayout->addWidget(_colorButton);
     nameLayout->addStretch();
+
     _layout->addWidget(nameLine);
 
     // Connection
     connect(_colorButton, SIGNAL(clicked()), this, SLOT(changeColor()));
 
     //addNewSection("Properties");
-   // _layout->addWidget(new InspectorSectionWidget("Properties",this));
     _comments = new QTextEdit;
     addNewSection("Comment", _comments);
     _layout->addStretch();
@@ -111,6 +113,11 @@ void InspectorWidgetInterface::moveSections()
 void InspectorWidgetInterface::changeColor()
 {
 
+    QColor color = QColorDialog::getColor(_currentColor, this, "Select Color");
+
+    if (color.isValid()) {
+        setColor(color);
+    }
 }
 
 void InspectorWidgetInterface::setName(QString newName)
@@ -127,6 +134,7 @@ void InspectorWidgetInterface::setColor(QColor newColor)
 {
     _colorButtonPixmap->fill(newColor);
     _colorButton->setIcon(QIcon(*_colorButtonPixmap));
+    _currentColor = newColor;
 }
 
 void InspectorWidgetInterface::changeLabelType(QString type)

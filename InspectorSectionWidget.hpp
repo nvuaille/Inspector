@@ -2,7 +2,7 @@
 
 #include <QWidget>
 class QVBoxLayout;
-class QLabel;
+class QLineEdit;
 class QToolButton;
 class QScrollArea;
 
@@ -36,12 +36,14 @@ public slots:
     //! insert newWidget at the index rank in the main layout
     void insertInSection(int index, QWidget *newWidget);
 
-private:
+//    void setHeight();
 
-    QScrollArea* _container = nullptr;
+private:
+    QWidget *_container = nullptr;
+  //  QScrollArea* _container = nullptr;
     QVBoxLayout* _containerLayout = nullptr; /*!< main layout */
 
-    QLabel* _sectionTitle = nullptr; /*!< header label \todo editable ? */
+    QLineEdit* _sectionTitle = nullptr; /*!< header label \todo editable ? */
     QToolButton* _btn = nullptr; /*!< button for the fold/unfold action */
 
     bool _isUnfolded;

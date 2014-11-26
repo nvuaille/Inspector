@@ -9,8 +9,11 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     InspectorPanel w;
 
-    ObjectInterval* test = new ObjectInterval("MonNom", "remarques diverses", Qt::red );
-    w.newItemInspected(test);
+    QObject *test = new QObject;
+
+    ObjectInterval* test1 = new ObjectInterval("MonNom", "remarques diverses", Qt::red );
+
+    w.newItemInspected(test1);
 
     w.show();
 

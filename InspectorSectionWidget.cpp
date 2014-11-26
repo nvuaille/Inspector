@@ -2,6 +2,7 @@
 
 #include <QLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <QToolButton>
 #include <QDebug>
 #include <QScrollArea>
@@ -13,7 +14,8 @@ InspectorSectionWidget::InspectorSectionWidget(QWidget *parent) :
     // HEADER : arrow button and name
     QWidget* title = new QWidget;
     QHBoxLayout* titleLayout = new QHBoxLayout;
-    _sectionTitle = new QLabel;
+    _sectionTitle = new QLineEdit; //QLabel;
+    _sectionTitle->setReadOnly(true);
     _btn = new QToolButton;
 
     titleLayout->addWidget(_btn);
@@ -21,24 +23,28 @@ InspectorSectionWidget::InspectorSectionWidget(QWidget *parent) :
     title->setLayout(titleLayout);
 
     // CONTENT
-    _container = new QScrollArea;
+/*    _container = new QScrollArea;
     QWidget *areaContent = new QWidget;
 
-    _container->setMinimumSize(150,150);
+    _container->setMinimumSize(150,50);
     _container->setWidgetResizable(true);
-//    _container->setVerticalScrollBar(new QScrollBar);
     _containerLayout = new QVBoxLayout;
     _containerLayout->setMargin(0);
     _containerLayout->addStretch();
     areaContent->setLayout(_containerLayout);
     _container->setWidget(areaContent);
+*/
+    _container = new QWidget;
+    _containerLayout = new QVBoxLayout;
+    _containerLayout->setMargin(1);
+    _containerLayout->addStretch();
+    _container->setLayout(_containerLayout);
 
     // GENERAL
     QVBoxLayout* globalLayout = new QVBoxLayout;
     globalLayout->addWidget(title);
     globalLayout->addWidget(_container);
     globalLayout->setMargin(5);
-//    globalLayout->setContentsMargins(5,5,5,5);
     connect(_btn, SIGNAL(released()), this, SLOT(expend()));
 
     // INIT
@@ -83,7 +89,6 @@ void InspectorSectionWidget::renameSection(QString newName)
 void InspectorSectionWidget::addContent(QWidget *newWidget)
 {
     _containerLayout->insertWidget(_containerLayout->count()-1, newWidget);
-    //_containerLayout->addWidget(newWidget);
 }
 
 void InspectorSectionWidget::insertInSection(int index, QWidget *newWidget)

@@ -89,5 +89,7 @@ private:
     QScrollArea *_scrollArea;
     QTextEdit *_comments;
 
+    QColor _currentColor = Qt::gray;
+
     QObject *_inspectedObject;
 };
