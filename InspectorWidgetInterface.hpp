@@ -3,6 +3,8 @@
 #include <QWidget>
 class QVBoxLayout;
 class QLineEdit;
+class QLabel;
+class QTextEdit;
 class QPushButton;
 class InspectorSectionWidget;
 class QScrollArea;
@@ -70,20 +72,22 @@ public slots:
 
     // Manage Values
 
-    /*!
-     * \brief updateDisplayedValues Load the data from the QObject obj add displays it
-     * \param obj The selected object
-     */
-    void updateDisplayedValues(QObject *obj);
     void changeColor(); //todo
+    void setName(QString newName);
+    void setComments(QString newComments);
+    void setColor(QColor newColor);
+    void changeLabelType(QString type);
+
+    void setInspectedObject(QObject *object);
 
 private:
     QVBoxLayout *_layout;
+    QLabel *_objectType;
     QLineEdit *_objectName;
     QPushButton *_colorButton;
     QPixmap *_colorButtonPixmap;
     QScrollArea *_scrollArea;
-    QLineEdit *_comments;
+    QTextEdit *_comments;
 
     QObject *_inspectedObject;
 };

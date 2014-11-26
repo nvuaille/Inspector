@@ -1,6 +1,7 @@
 #pragma once
 
 #include "InspectorWidgetInterface.hpp"
+#include "objectinterval.hpp"
 
 /*!
  * \brief The IntervalInspectorView class
@@ -11,7 +12,7 @@ class IntervalInspectorView : public InspectorWidgetInterface
 {
     Q_OBJECT
 public:
-    explicit IntervalInspectorView(QObject *object, QWidget *parent = 0);
+    explicit IntervalInspectorView(ObjectInterval *object, QWidget *parent = 0);
 
 signals:
 
@@ -20,6 +21,7 @@ public slots:
      * \brief addAutomation Add an automation
      */
     void addAutomation();
+    void updateDisplayedValues(ObjectInterval *obj);
 
 private:
 

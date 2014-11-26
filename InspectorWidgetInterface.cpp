@@ -3,6 +3,7 @@
 
 #include <QLayout>
 #include <QLineEdit>
+#include <QTextEdit>
 #include <QLabel>
 #include <QPushButton>
 #include <QSpacerItem>
@@ -19,6 +20,9 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
     _layout->setMargin(5);
     setLayout(_layout);
 
+    _objectType = new QLabel("type");
+    _layout->addWidget(_objectType);
+
     // Object Name : label + lineEdit in a container
     QWidget *nameLine = new QWidget(this);
     QHBoxLayout *nameLayout = new QHBoxLayout;
@@ -26,16 +30,17 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
     nameLine->setObjectName("ElementName");
 
     nameLayout->addWidget(_objectName);
+    nameLayout->addStretch();
     nameLine->setLayout(nameLayout);
 
     _colorButton = new QPushButton;
     _colorButton->setMaximumSize(QSize(1.5*COLOR_ICON_SIZE, 1.5*COLOR_ICON_SIZE));
     _colorButton->setIconSize(QSize(COLOR_ICON_SIZE, COLOR_ICON_SIZE));
     _colorButtonPixmap = new QPixmap(4 * COLOR_ICON_SIZE / 3, 4 * COLOR_ICON_SIZE / 3);
-
     _colorButton->setIcon(QIcon(*_colorButtonPixmap));
 
     nameLayout->addWidget(_colorButton);
+    nameLayout->addStretch();
     _layout->addWidget(nameLine);
 
     // Connection
@@ -43,7 +48,7 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
 
     //addNewSection("Properties");
    // _layout->addWidget(new InspectorSectionWidget("Properties",this));
-    _comments = new QLineEdit;
+    _comments = new QTextEdit;
     addNewSection("Comment", _comments);
     _layout->addStretch();
 }
@@ -103,20 +108,34 @@ void InspectorWidgetInterface::moveSections()
 
 }
 
-void InspectorWidgetInterface::updateDisplayedValues(QObject *obj)
-{
-    // DEMO
-    if (obj != nullptr) {
-        _objectName->setText(obj->objectName()); // récupérer direct le vrai nom
-        _colorButtonPixmap->fill(QColor(Qt::gray)); // récupérer direct la vraie couleur
-        _colorButton->setIcon(QIcon(*_colorButtonPixmap));
-        _comments->setText(obj->metaObject()->className());
-        _inspectedObject = obj;
-    }
-}
-
 void InspectorWidgetInterface::changeColor()
 {
 
+}
+
+void InspectorWidgetInterface::setName(QString newName)
+{
+    _objectName->setText(newName);
+}
+
+void InspectorWidgetInterface::setComments(QString newComments)
+{
+    _comments->setText(newComments);
+}
+
+void InspectorWidgetInterface::setColor(QColor newColor)
+{
+    _colorButtonPixmap->fill(newColor);
+    _colorButton->setIcon(QIcon(*_colorButtonPixmap));
+}
+
+void InspectorWidgetInterface::changeLabelType(QString type)
+{
+    _objectType->setText(type);
+}
+
+void InspectorWidgetInterface::setInspectedObject(QObject *object)
+{
+    _inspectedObject = object;
 }
 

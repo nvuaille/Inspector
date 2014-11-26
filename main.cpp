@@ -1,4 +1,5 @@
 #include "InspectorPanel.hpp"
+#include "objectinterval.hpp"
 
 #include <QApplication>
 #include <QDebug>
@@ -8,8 +9,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     InspectorPanel w;
 
-    QObject* test = new QObject;
-    test->setObjectName("Bobby Watson");
+    ObjectInterval* test = new ObjectInterval("MonNom", "remarques diverses", Qt::red );
     w.newItemInspected(test);
 
     w.show();

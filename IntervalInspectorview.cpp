@@ -9,7 +9,7 @@
 #include <QDebug>
 #include <QScrollArea>
 
-IntervalInspectorView::IntervalInspectorView(QObject *object, QWidget *parent) :
+IntervalInspectorView::IntervalInspectorView(ObjectInterval *object, QWidget *parent) :
     InspectorWidgetInterface(parent)
 {
     setObjectName("Interval");
@@ -45,5 +45,17 @@ void IntervalInspectorView::addAutomation()
     InspectorSectionWidget* autom = findChild<InspectorSectionWidget*>("Automations");
     if (autom != nullptr) {
         autom->addContent(new InspectorSectionWidget);
+    }
+}
+
+void IntervalInspectorView::updateDisplayedValues(ObjectInterval *obj)
+{
+    // DEMO
+    if (obj != nullptr) {
+        setName(obj->name());
+        setColor(obj->color());
+        setComments(obj->comments());
+        setInspectedObject(obj);
+        changeLabelType("TimeBox");
     }
 }

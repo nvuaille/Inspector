@@ -6,10 +6,10 @@
 
 InspectorWidgetInterface *InspectorWidget::makeWidget(QObject *sourceElement)
 {
-    return new IntervalInspectorView(sourceElement);
+    return new IntervalInspectorView(static_cast<ObjectInterval*>(sourceElement));
 }
 
 InspectorWidgetInterface *InspectorWidget::makeWidget(QList<QObject *> sourceElements)
 {
-    return new IntervalInspectorView(sourceElements.at(0));
+    return new IntervalInspectorView(static_cast<ObjectInterval*>(sourceElements.at(0)));
 }
