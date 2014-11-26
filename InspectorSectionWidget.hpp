@@ -1,11 +1,16 @@
-#ifndef INSPECTORSECTIONWIDGET_H
-#define INSPECTORSECTIONWIDGET_H
+#pragma once
 
 #include <QWidget>
 class QVBoxLayout;
 class QLabel;
 class QToolButton;
 class QScrollArea;
+
+/** @brief InspectorSectionWidget is widget that can fold or unfold his content.
+ *
+ * A header with a name is always displayed.
+ * It contains one main widget in a QScrollArea with a vertical layout, that can be folded/unfolded on click on the arrow button.
+ */
 
 class InspectorSectionWidget : public QWidget
 {
@@ -23,19 +28,21 @@ public slots:
     void expend();
 
     // Manage section
+
+    //! change the name in the header
     void renameSection(QString newName);
+    //! add the widget newWidget in the main layout
     void addContent(QWidget *newWidget);
+    //! insert newWidget at the index rank in the main layout
     void insertInSection(int index, QWidget *newWidget);
 
 private:
 
     QScrollArea* _container = nullptr;
-    QVBoxLayout* _containerLayout = nullptr;
+    QVBoxLayout* _containerLayout = nullptr; /*!< main layout */
 
-    QLabel* _sectionTitle = nullptr;
-    QToolButton* _btn = nullptr;
+    QLabel* _sectionTitle = nullptr; /*!< header label \todo editable ? */
+    QToolButton* _btn = nullptr; /*!< button for the fold/unfold action */
 
-    bool _isExpended;
+    bool _isUnfolded;
 };
-
-#endif // INSPECTORSECTIONWIDGET_H

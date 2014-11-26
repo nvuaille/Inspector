@@ -1,7 +1,11 @@
-#ifndef INTERVALINSPECTORVIEW_H
-#define INTERVALINSPECTORVIEW_H
+#pragma once
 
 #include "InspectorWidgetInterface.hpp"
+
+/*!
+ * \brief The IntervalInspectorView class
+ *      Inherits from InspectorWidgetInterface. Manages an inteface for an Interval (Timebox) element.
+ */
 
 class IntervalInspectorView : public InspectorWidgetInterface
 {
@@ -12,10 +16,11 @@ public:
 signals:
 
 public slots:
+    /*!
+     * \brief addAutomation Add an automation
+     */
     void addAutomation();
 
 private:
 
 };
-
-#endif // INTERVALINSPECTORVIEW_H

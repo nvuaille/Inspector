@@ -42,7 +42,7 @@ InspectorSectionWidget::InspectorSectionWidget(QWidget *parent) :
     connect(_btn, SIGNAL(released()), this, SLOT(expend()));
 
     // INIT
-    _isExpended = true;
+    _isUnfolded = true;
     _btn->setArrowType(Qt::DownArrow);
     expend();
 
@@ -65,9 +65,9 @@ InspectorSectionWidget::~InspectorSectionWidget()
 
 void InspectorSectionWidget::expend()
 {
-    _isExpended = !_isExpended;
-    _container->setVisible(_isExpended);
-    if (_isExpended) {
+    _isUnfolded = !_isUnfolded;
+    _container->setVisible(_isUnfolded);
+    if (_isUnfolded) {
         _btn->setArrowType(Qt::DownArrow);
     }
     else {
