@@ -4,6 +4,7 @@
 class QVBoxLayout;
 class QLineEdit;
 class QToolButton;
+class QPushButton;
 class QScrollArea;
 
 /** @brief InspectorSectionWidget is widget that can fold or unfold his content.
@@ -36,6 +37,9 @@ public slots:
     //! insert newWidget at the index rank in the main layout
     void insertInSection(int index, QWidget *newWidget);
 
+    void editEnable();
+    void editDisable();
+
 //    void setHeight();
 
 private:
@@ -45,6 +49,8 @@ private:
 
     QLineEdit* _sectionTitle = nullptr; /*!< header label \todo editable ? */
     QToolButton* _btn = nullptr; /*!< button for the fold/unfold action */
+
+    QPushButton *_buttonTitle;
 
     bool _isUnfolded;
 };

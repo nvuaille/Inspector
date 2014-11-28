@@ -12,16 +12,9 @@
 InspectorPanel::InspectorPanel(QWidget *parent) :
     QWidget(parent)
 {
-    QVBoxLayout *lay = new QVBoxLayout(this);
-    QScrollArea *globalArea = new QScrollArea;
-    QWidget *globalContent = new QWidget;
-    globalArea->setWidgetResizable(true);
 
-    _layout = new QVBoxLayout;
+    _layout = new QVBoxLayout(this);
     _layout->setMargin(8);
-    globalContent->setLayout(_layout);
-    globalArea->setWidget(globalContent);
-    lay->addWidget(globalArea);
 
     setMinimumWidth(300);
     setMaximumHeight(600);

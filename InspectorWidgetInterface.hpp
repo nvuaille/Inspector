@@ -68,7 +68,7 @@ public slots:
 
     void removeSection(QString sectionName); //todo
     void moveSection(int oldIndex, int newIndex, QString sectionName = ""); //todo
-    void moveSections(); //todo
+    void moveSections();
 
     // Manage Values
 
@@ -80,8 +80,11 @@ public slots:
 
     void setInspectedObject(QObject *object);
 
+    // getters
+    QVBoxLayout *areaLayout() {return _scrollAreaLayout;}
+
 private:
-    QVBoxLayout *_layout;
+    QVBoxLayout *_scrollAreaLayout;
     QLabel *_objectType;
     QLineEdit *_objectName;
     QPushButton *_colorButton;
@@ -89,6 +92,7 @@ private:
     QScrollArea *_scrollArea;
     QTextEdit *_comments;
 
+    std::vector<QWidget*>* sections;
     QColor _currentColor = Qt::gray;
 
     QObject *_inspectedObject;

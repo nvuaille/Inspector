@@ -22,6 +22,10 @@ public:
     QColor color() const;
     void setColor(const QColor &color);
 
+
+    std::vector<QString> *automations() const;
+    void setAutomations(std::vector<QString> *automations);
+
 signals:
 
 public slots:
@@ -30,6 +34,7 @@ private:
     QString _name;
     QString _comments;
     QColor _color;
+    std::vector<QString> *_automations;
 
 };
 

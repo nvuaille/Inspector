@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QToolButton>
+#include <QPushButton>
 #include <QDebug>
 #include <QScrollArea>
 #include <QScrollBar>
@@ -14,12 +15,21 @@ InspectorSectionWidget::InspectorSectionWidget(QWidget *parent) :
     // HEADER : arrow button and name
     QWidget* title = new QWidget;
     QHBoxLayout* titleLayout = new QHBoxLayout;
-    _sectionTitle = new QLineEdit; //QLabel;
-    _sectionTitle->setReadOnly(true);
+    _sectionTitle = new QLineEdit; //QLabel ?;
+    _sectionTitle->setStyleSheet( QString( "background-color: lightGray;"));
     _btn = new QToolButton;
 
+    _buttonTitle = new QPushButton;
+    _buttonTitle->setFlat(true);
+    _buttonTitle->setText("section name");
+    _buttonTitle->setStyleSheet("text-align: left;");
+    _buttonTitle->setLayout(new QVBoxLayout);
+    _buttonTitle->layout()->addWidget(_sectionTitle);
+    _buttonTitle->layout()->setMargin(0);
+    _sectionTitle->hide();
+
     titleLayout->addWidget(_btn);
-    titleLayout->addWidget(_sectionTitle);
+    titleLayout->addWidget(_buttonTitle);
     title->setLayout(titleLayout);
 
     // CONTENT
@@ -45,12 +55,16 @@ InspectorSectionWidget::InspectorSectionWidget(QWidget *parent) :
     globalLayout->addWidget(title);
     globalLayout->addWidget(_container);
     globalLayout->setMargin(5);
+
     connect(_btn, SIGNAL(released()), this, SLOT(expend()));
+    connect(_buttonTitle, SIGNAL(clicked()), this, SLOT(editEnable()) );
+    connect(_sectionTitle, SIGNAL(editingFinished()), this, SLOT(editDisable()) );
+
 
     // INIT
     _isUnfolded = true;
     _btn->setArrowType(Qt::DownArrow);
-    expend();
+ //   expend();
 
     setLayout(globalLayout);
 
@@ -84,6 +98,7 @@ void InspectorSectionWidget::expend()
 void InspectorSectionWidget::renameSection(QString newName)
 {
     _sectionTitle->setText(newName);
+    _buttonTitle->setText(newName);
 }
 
 void InspectorSectionWidget::addContent(QWidget *newWidget)
@@ -95,4 +110,16 @@ void InspectorSectionWidget::insertInSection(int index, QWidget *newWidget)
 {
     _containerLayout->insertWidget(index, newWidget);
     _container->setLayout(_containerLayout);
+}
+
+void InspectorSectionWidget::editEnable()
+{
+    _sectionTitle->show();
+    _sectionTitle->setFocus();
+}
+
+void InspectorSectionWidget::editDisable()
+{
+    _sectionTitle->hide();
+    _buttonTitle->setText(_sectionTitle->text());
 }

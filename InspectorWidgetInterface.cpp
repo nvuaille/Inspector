@@ -17,14 +17,16 @@ static const int COLOR_ICON_SIZE = 21;
 InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidget *parent) :
     QWidget(parent), _inspectedObject{inspectedObj}
 {
-    _layout = new QVBoxLayout;
-    _layout->setMargin(5);
-    setLayout(_layout);
+    sections = new std::vector<QWidget*>;
 
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->setMargin(5);
+    setLayout(layout);
+
+    // type
     _objectType = new QLabel("type");
-    _layout->addWidget(_objectType);
 
-    // Object Name : label + lineEdit in a container
+    // Name : label + lineEdit in a container
     QWidget *nameLine = new QWidget(this);
     QHBoxLayout *nameLayout = new QHBoxLayout;
     _objectName = new QLineEdit;
@@ -34,6 +36,7 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
     nameLayout->addStretch();
     nameLine->setLayout(nameLayout);
 
+    // color
     _colorButton = new QPushButton;
     _colorButton->setMaximumSize(QSize(1.5*COLOR_ICON_SIZE, 1.5*COLOR_ICON_SIZE));
     _colorButton->setIconSize(QSize(COLOR_ICON_SIZE, COLOR_ICON_SIZE));
@@ -44,22 +47,41 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
     nameLayout->addWidget(_colorButton);
     nameLayout->addStretch();
 
-    _layout->addWidget(nameLine);
+    // scroll Area
+    _scrollAreaLayout = new QVBoxLayout(this);
+    QScrollArea *scrollArea = new QScrollArea;
+    QWidget *scrollAreaContentWidget = new QWidget;
+    scrollArea->setWidgetResizable(true);
+
+    scrollAreaContentWidget->setLayout(_scrollAreaLayout);
+    scrollArea->setWidget(scrollAreaContentWidget);
+
+    // comments
+    _comments = new QTextEdit;
+    InspectorSectionWidget *comments = new InspectorSectionWidget("Comments");
+    comments->addContent(_comments);
+
+    sections->push_back(_objectType);
+    sections->push_back(nameLine);
+    sections->push_back(scrollArea);
+    sections->push_back(comments);
+
+    moveSections();
+
+    _scrollAreaLayout->addStretch();
+
 
     // Connection
     connect(_colorButton, SIGNAL(clicked()), this, SLOT(changeColor()));
 
-    //addNewSection("Properties");
-    _comments = new QTextEdit;
-    addNewSection("Comment", _comments);
-    _layout->addStretch();
 }
+
 
 void InspectorWidgetInterface::addNewSection(QString sectionName, QWidget *content)
 {
     InspectorSectionWidget* section = new InspectorSectionWidget(sectionName, this);
     section->addContent(content);
-    _layout->addWidget(section);
+    _scrollAreaLayout->addWidget(section);
 }
 
 void InspectorWidgetInterface::addSubSection(QString parentSection, QString subSection, InspectorSectionWidget *content)
@@ -88,11 +110,16 @@ void InspectorWidgetInterface::addInSection(QString sectionName, QWidget *conten
 
 void InspectorWidgetInterface::insertSection(int index, QString name, QWidget *content)
 {
+    if (index < 0) {
+        index += _scrollAreaLayout->count();
+    }
     InspectorSectionWidget* section = new InspectorSectionWidget(this);
     section->renameSection(name);
-    section->addContent(content);
     section->setObjectName(name);
-    _layout->insertWidget(index, section);
+    if(content) {
+        section->addContent(content);
+    }
+    _scrollAreaLayout->insertWidget(index, section);
 }
 
 void InspectorWidgetInterface::removeSection(QString sectionName)
@@ -107,7 +134,9 @@ void InspectorWidgetInterface::moveSection(int oldIndex, int newIndex, QString s
 
 void InspectorWidgetInterface::moveSections()
 {
-
+    for(auto &section : *sections) {
+        layout()->addWidget(section);
+    }
 }
 
 void InspectorWidgetInterface::changeColor()

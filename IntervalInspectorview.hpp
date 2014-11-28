@@ -3,6 +3,8 @@
 #include "InspectorWidgetInterface.hpp"
 #include "objectinterval.hpp"
 
+class QFormLayout;
+
 /*!
  * \brief The IntervalInspectorView class
  *      Inherits from InspectorWidgetInterface. Manages an inteface for an Interval (Timebox) element.
@@ -20,9 +22,11 @@ public slots:
     /*!
      * \brief addAutomation Add an automation
      */
-    void addAutomation();
+    void addAutomation(QString address = "automation");
     void updateDisplayedValues(ObjectInterval *obj);
 
 private:
 
+    QFormLayout *_startForm;
+    QFormLayout *_endForm;
 };
