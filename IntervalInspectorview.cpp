@@ -1,5 +1,6 @@
 #include "IntervalInspectorview.hpp"
 #include "InspectorSectionWidget.hpp"
+#include "ReorderWidget.hpp"
 
 #include <QLabel>
 #include <QLineEdit>
@@ -8,6 +9,7 @@
 #include <QFormLayout>
 #include <QWidget>
 #include <QToolButton>
+#include <QPushButton>
 #include <QDebug>
 #include <QScrollArea>
 
@@ -15,40 +17,74 @@ IntervalInspectorView::IntervalInspectorView(ObjectInterval *object, QWidget *pa
     InspectorWidgetInterface(parent)
 {
     setObjectName("Interval");
+    _properties = new std::vector<QWidget*>;
+    _automations = new std::vector<QWidget*>;
 
-    // Add Automation Section
-    QWidget* automTitle = new QWidget;
-    QHBoxLayout* automTitleLayout = new QHBoxLayout;
-    QLabel* sectionTitle = new QLabel("Add Automation");
-    QToolButton* btn = new QToolButton;
-    btn->setText("+");
-    btn->setObjectName("addAutom");
+// Add Automation Section
+    QWidget* addAutomWidget = new QWidget;
+    QHBoxLayout* addAutomLayout = new QHBoxLayout;
+    QPushButton* addAutom = new QPushButton("Add Automation");
+    addAutom->setStyleSheet(QString("text-align : left;"));
+    addAutom->setFlat(true);
 
-    automTitleLayout->addWidget(btn);
-    automTitleLayout->addWidget(sectionTitle);
-    automTitle->setLayout(automTitleLayout);
+    // addAutom button
+    QToolButton* addAutomButton = new QToolButton;
+    addAutomButton->setText("+");
+    addAutomButton->setObjectName("addAutom");
 
-    connect(btn, SIGNAL(released()), this, SLOT(addAutomation()));
+ /*   // reorderButton
+    QToolButton *reorderButton = new QToolButton;
+    reorderButton->setText("*");
+    reorderButton->setObjectName("reorderButton");
+*/
+    addAutomLayout->addWidget(addAutomButton);
+    addAutomLayout->addWidget(addAutom);
+//    addAutomLayout->addWidget(reorderButton);
+    addAutomWidget->setLayout(addAutomLayout);
+
+    connect(addAutomButton, SIGNAL(released()), this, SLOT(addAutomation()));
+    connect(addAutom, SIGNAL(released()), this, SLOT(addAutomation()));
+//    connect(reorderButton, SIGNAL(released()), this, SLOT(reorderAutomations()));
+
 
     // line
     QFrame* line = new QFrame();
     line->setFrameShape(QFrame::HLine);
     line->setLineWidth(2);
 
+// Start state
     QWidget *startWidget = new QWidget;
     _startForm = new QFormLayout(startWidget);
 
-    // Sections
-    areaLayout()->insertWidget(1, automTitle);
-    insertSection( 0, "Automations");
-    areaLayout()->insertWidget(2, line);
-    insertSection( 3, "Start", startWidget);
-    insertSection( 4, "End", new QLabel("End state"));
+// End State
+    QWidget *endWidget = new QWidget;
+    _endForm = new QFormLayout(endWidget);
 
-    std::vector<QString>::iterator it;
-    for( it = object->automations()->begin(); it != object->automations()->end() ; it++ ) {
-        addAutomation(*it);
-    }
+
+    // Sections
+
+    InspectorSectionWidget* automSection = new InspectorSectionWidget(this);
+    automSection->renameSection("Automations");
+    automSection->setObjectName("Automations");
+
+
+    InspectorSectionWidget* startSection = new InspectorSectionWidget(this);
+    startSection->renameSection("Start");
+    startSection->addContent(startWidget);
+    startSection->setObjectName("Start");
+
+    InspectorSectionWidget* endSection = new InspectorSectionWidget(this);
+    endSection->renameSection("End");
+    endSection->addContent(endWidget);
+    endSection->setObjectName("End");
+
+    _properties->push_back(automSection);
+    _properties->push_back(addAutomWidget);
+    _properties->push_back(line);
+    _properties->push_back(startSection);
+    _properties->push_back(endSection);
+
+    updateSectionsView(areaLayout(), _properties);
 
     // display data
     updateDisplayedValues(object);
@@ -58,8 +94,15 @@ void IntervalInspectorView::addAutomation(QString address)
 {
     InspectorSectionWidget* autom = findChild<InspectorSectionWidget*>("Automations");
     if (autom != nullptr) {
-        autom->addContent(new InspectorSectionWidget(address));
+        InspectorSectionWidget *newAutomation = new InspectorSectionWidget(address);
 
+        if(!_automations->empty()) {
+            static_cast<InspectorSectionWidget*>(_automations->back())->editDisable();
+        }
+
+        _automations->push_back(newAutomation);
+        autom->addContent(newAutomation);
+        newAutomation->editEnable();
     }
 }
 
@@ -73,6 +116,18 @@ void IntervalInspectorView::updateDisplayedValues(ObjectInterval *obj)
         setInspectedObject(obj);
         changeLabelType("TimeBox");
         _startForm->addRow("/first/message", new QLineEdit);
+        _endForm->addRow("Last/message", new QLineEdit );
 
+        std::vector<QString>::iterator it;
+        for( it = obj->automations()->begin(); it != obj->automations()->end() ; it++ ) {
+            addAutomation(*it);
+            if(!_automations->empty()) {
+                static_cast<InspectorSectionWidget*>(_automations->back())->editDisable();
+            }        }
     }
+}
+
+void IntervalInspectorView::reorderAutomations()
+{
+    new ReorderWidget(_automations);
 }

@@ -50,14 +50,6 @@ public slots:
     void addSubSection(QString parentSection, QString subSection, InspectorSectionWidget *content);
 
     /*!
-     * \brief addInSection Add any Widget in the choosen InspectorSectionWidget
-     *
-     * \param sectionName The name of the InspectorSectionWidget
-     * \param content The widget
-     */
-    void addInSection(QString sectionName, QWidget* content); //todo
-
-    /*!
      * \brief insertSection Insert a InspectorSectionWidget in the main widget
      *
      * \param index Index
@@ -67,12 +59,11 @@ public slots:
     void insertSection(int index, QString name, QWidget* content = 0);
 
     void removeSection(QString sectionName); //todo
-    void moveSection(int oldIndex, int newIndex, QString sectionName = ""); //todo
-    void moveSections();
+    void updateSectionsView(QVBoxLayout* layout, std::vector<QWidget *> *contents);
 
     // Manage Values
 
-    void changeColor(); //todo
+    void changeColor();
     void setName(QString newName);
     void setComments(QString newComments);
     void setColor(QColor newColor);
@@ -92,7 +83,7 @@ private:
     QScrollArea *_scrollArea;
     QTextEdit *_comments;
 
-    std::vector<QWidget*>* sections;
+    std::vector<QWidget*>* _sections;
     QColor _currentColor = Qt::gray;
 
     QObject *_inspectedObject;

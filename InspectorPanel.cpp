@@ -17,7 +17,7 @@ InspectorPanel::InspectorPanel(QWidget *parent) :
     _layout->setMargin(8);
 
     setMinimumWidth(300);
-    setMaximumHeight(600);
+    setMaximumHeight(800);
 }
 
 InspectorPanel::~InspectorPanel()

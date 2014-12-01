@@ -17,7 +17,7 @@ static const int COLOR_ICON_SIZE = 21;
 InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidget *parent) :
     QWidget(parent), _inspectedObject{inspectedObj}
 {
-    sections = new std::vector<QWidget*>;
+    _sections = new std::vector<QWidget*>;
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setMargin(5);
@@ -48,7 +48,7 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
     nameLayout->addStretch();
 
     // scroll Area
-    _scrollAreaLayout = new QVBoxLayout(this);
+    _scrollAreaLayout = new QVBoxLayout;
     QScrollArea *scrollArea = new QScrollArea;
     QWidget *scrollAreaContentWidget = new QWidget;
     scrollArea->setWidgetResizable(true);
@@ -61,12 +61,12 @@ InspectorWidgetInterface::InspectorWidgetInterface(QObject *inspectedObj, QWidge
     InspectorSectionWidget *comments = new InspectorSectionWidget("Comments");
     comments->addContent(_comments);
 
-    sections->push_back(_objectType);
-    sections->push_back(nameLine);
-    sections->push_back(scrollArea);
-    sections->push_back(comments);
+    _sections->push_back(_objectType);
+    _sections->push_back(nameLine);
+    _sections->push_back(scrollArea);
+    _sections->push_back(comments);
 
-    moveSections();
+    updateSectionsView(layout, _sections);
 
     _scrollAreaLayout->addStretch();
 
@@ -97,17 +97,6 @@ void InspectorWidgetInterface::addSubSection(QString parentSection, QString subS
     }
 }
 
-void InspectorWidgetInterface::addInSection(QString sectionName, QWidget *content)
-{
-    InspectorSectionWidget* section = findChild<InspectorSectionWidget*>(sectionName);
-
-    if(section != nullptr) {
-        {
-            section->addContent(content);
-        }
-    }
-}
-
 void InspectorWidgetInterface::insertSection(int index, QString name, QWidget *content)
 {
     if (index < 0) {
@@ -127,16 +116,15 @@ void InspectorWidgetInterface::removeSection(QString sectionName)
 
 }
 
-void InspectorWidgetInterface::moveSection(int oldIndex, int newIndex, QString sectionName)
+void InspectorWidgetInterface::updateSectionsView(QVBoxLayout *layout, std::vector<QWidget *>* contents)
 {
-
-}
-
-void InspectorWidgetInterface::moveSections()
-{
-    for(auto &section : *sections) {
-        layout()->addWidget(section);
+    while(! layout->isEmpty()) {
+        delete layout->itemAt(0)->widget();
     }
+    for(auto &section : *contents) {
+        layout->addWidget(section);
+    }
+    layout->addStretch();
 }
 
 void InspectorWidgetInterface::changeColor()

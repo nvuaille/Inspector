@@ -24,9 +24,14 @@ public slots:
      */
     void addAutomation(QString address = "automation");
     void updateDisplayedValues(ObjectInterval *obj);
+    void reorderAutomations();
 
 private:
 
     QFormLayout *_startForm;
     QFormLayout *_endForm;
+
+    std::vector<QWidget*>* _properties;
+    std::vector<QWidget*>* _automations;
+
 };

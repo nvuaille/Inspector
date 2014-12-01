@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     InspectorWidgetInterface.cpp \
     IntervalInspectorview.cpp \
     InspectorWidget.cpp \
-    objectinterval.cpp
+    objectinterval.cpp \
+    ReorderWidget.cpp
 
 HEADERS  += InspectorPanel.hpp \
     InspectorSectionWidget.hpp \
@@ -28,7 +29,8 @@ HEADERS  += InspectorPanel.hpp \
     IntervalInspectorview.hpp \
     InspectorWidgetFactoryInterface.hpp \
     InspectorWidget.hpp \
-    objectinterval.hpp
+    objectinterval.hpp \
+    ReorderWidget.hpp
 
 FORMS    += InspectorPanel.ui
 
